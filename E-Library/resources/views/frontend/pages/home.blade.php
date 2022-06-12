@@ -1,0 +1,110 @@
+@extends('frontend.layouts.app')
+
+@section('title', 'Home')
+
+@section('content')
+<!-- Home -->
+<section class="home">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-sm-12">
+                <p class="intro">Welcome to our</p>
+                <h1 class="title display-4 mb-2">public <span class="text-primary">E</span>-library</h1>
+                <p class="description mb-4">
+                    You can learn anything in our library for free.<br />
+                    Remember! For Free, For Everyone.
+                </p>
+                <button class="btn btn-primary primary-btn">
+                    Go To Library
+                </button>
+            </div>
+            <div class="col-md-6 col-sm-12">
+                <div class="swiper stand-books-slider">
+                    <div class="swiper-wrapper">
+                        @foreach ($latestBooks as $book)
+                            <a href="" class="swiper-slide"><img src="{{ asset('covers/'.$book->cover) }}" alt=""></a>
+                        @endforeach
+                    </div>
+                    <img src="{{ asset('frontend/assets/images/stand.png') }}" class="stand" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- About -->
+<section class="section container-fluid p-0">
+    <div class="cover">
+        <div class="overlay"></div>
+            <div class="content text-center">
+                <h1>Some Features That Made Us Unique</h1>
+                <p>Lately it seems like we're all spending more time doing chores. Read on for 14 ideas to help you make tedious tasks easier, less stressful.</p>
+            </div>
+        </div>
+    <div class="container-fluid text-center">
+        <div class="numbers d-flex flex-md-row flex-wrap justify-content-center">
+            <div class="rect">
+                <h1 class="display-3">145</h1>
+                <p>Good Books</p>
+            </div>
+            <div class="rect">
+                <h1 class="display-3">84</h1>
+                <p>Smart Authors</p>
+            </div>
+            <div class="rect">
+                <h1 class="display-3">1056</h1>
+                <p>Happy Readers</p>
+            </div>
+            <div class="rect">
+                <h1 class="display-3">43</h1>
+                <p>Rare Books</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Books -->
+<section class="books">
+    <div class="container">
+        <h1 class="heading my-5"> <span>let's read books</span> </h1>
+
+        <div class="recent-book-list">
+            <div class="d-flex justify-content-between align-items-center">
+                <h3 class="title">Recent Book List</h3>
+                <a href="#" class="btn btn-primary primary-btn">View All</a>
+            </div>
+            <hr>
+            <div class="container swiper books-slider">
+                <div class="book-list swiper-wrapper">
+                    @foreach ($latestBooks as $book)
+                    <div class="book-card swiper-slide">
+                        <div class="card p-3 border-0">
+                            <img src="{{ asset('covers/'.$book->cover) }}" alt="" class="book-cover">
+                            <hr>
+                            <h3 class="book-title text-center"><a href="{{ route('books.show', $book) }}">{{ $book->name }}</a></h3>
+                            <p class="book-author text-center mt-3">By : <a href="">{{ $book->author->name }}</a></p>
+                            <a href="{{ route('books.show', $book) }}" class="btn btn-primary primary-btn">Read More</a>
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Newsletter -->
+<section class="newsletter">
+
+    <div class="container">
+        <form action="#">
+            <h2 class="title">subscribe for latest updates</h2>
+            <input type="email" name="" class="form-control my-3" placeholder="Enter Your Email" id="" class="box">
+            <button type="submit" class="btn primary-btn">Subscribe</button>
+        </form>
+    </div>
+
+</section>
+@endsection
