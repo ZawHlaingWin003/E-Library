@@ -20,7 +20,7 @@
             <tbody>
                 @foreach ($users as $user)
                 <tr>
-                    <td>{{ $loop->iteration }}</td>
+                    <td>{{ ++$i }}</td>
                     <td class="txt-oflo">{{ $user->name }}</td>
                     <td>{{ $user->email }}</td>
                     <td><span class="text-success">{{ $user->ip ? $user->ip : 'Haven\'t Login yet' }}</span></td>

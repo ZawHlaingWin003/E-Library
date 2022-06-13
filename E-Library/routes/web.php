@@ -9,6 +9,7 @@ use App\Http\Controllers\Auth\AdminLoginController;
 use App\Http\Controllers\Dashboard\GenreController;
 use App\Http\Controllers\Dashboard\AuthorController;
 use App\Http\Controllers\Dashboard\AdminUserController;
+use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\UserCodeController;
 
 /*
@@ -23,6 +24,7 @@ use App\Http\Controllers\UserCodeController;
 */
 
 Route::get('/', HomeController::class)->name('home');
+Route::post('/subscribe', [NewsletterController::class, 'subscribe'])->name('newsletter.subscribe');
 
 Route::get('/books', [BookController::class, 'index'])->name('books.index');
 Route::get('/books/{book}', [BookController::class, 'show'])->name('books.show');
@@ -62,6 +64,8 @@ Route::prefix('admin')->group(function(){
         Route::resource('/authors', AuthorController::class)->except('index', 'show');
 
         Route::resource('/genres', GenreController::class);
+
+        Route::get('/subscribed_list', [NewsletterController::class, 'list'])->name('subscribed_list');
 
     });
 

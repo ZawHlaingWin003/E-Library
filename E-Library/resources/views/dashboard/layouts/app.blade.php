@@ -116,7 +116,7 @@
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link {{ request()->is('admin/book_list') || request()->is('admin/books/create') ||  request()->is('admin/books/upload') ? 'active' : '' }}" href="{{ route('books.list') }}">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link {{ request()->is('admin/book_list') || request()->is('admin/books/create') || request()->is('admin/books/*/edit') ||  request()->is('admin/books/upload') ? 'active' : '' }}" href="{{ route('books.list') }}">
                                 <i class="fa fa-book"></i>
                                 <span class="hide-menu">Books</span>
                             </a>
@@ -131,6 +131,12 @@
                             <a class="sidebar-link waves-effect waves-dark sidebar-link {{ request()->is('admin/genres') || request()->is('admin/genres/create') || request()->is('admin/genres/*/edit') ? 'active' : '' }}" href="{{ route('genres.index') }}">
                                 <i class="fa fa-list"></i>
                                 <span class="hide-menu">Genres</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link {{ request()->is('admin/subscribed_list') ? 'active' : '' }}" href="{{ route('subscribed_list') }}">
+                                <i class="fa fa-envelope"></i>
+                                <span class="hide-menu">Subscribed Email List</span>
                             </a>
                         </li>
                     </ul>

@@ -20,7 +20,7 @@
             <tbody>
                 @foreach ($authors as $author)
                 <tr>
-                    <td>{{ $loop->iteration }}</td>
+                    <td>{{ ++$i }}</td>
                     <td class="txt-oflo">{{ $author->name }}</td>
                     <td class="txt-ofo">
                         <a href="{{ route('authors.show', $author->id) }}" class="btn btn-sm btn-success">Detail <i class="fa fa-user-cog"></i></a>

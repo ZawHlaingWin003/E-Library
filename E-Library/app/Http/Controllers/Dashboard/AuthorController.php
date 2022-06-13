@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard;
 use App\Models\Author;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Book;
 use Illuminate\Support\Facades\File;
 
 class AuthorController extends Controller
@@ -28,7 +29,7 @@ class AuthorController extends Controller
                 <div class="card text-center">
                     <div class="card-body">
                         <div class="profile">
-                                    <img src="'. asset('profiles/'.$author->profile) .'" alt="" class="img-fluid">
+                            <img src="'. asset('profiles/'.$author->profile) .'" alt="" class="img-fluid">
                         </div>
                     </div>
                     <div class="card-footer">
@@ -45,7 +46,7 @@ class AuthorController extends Controller
     public function list()
     {
         $authors = Author::orderBy('id', 'desc')->paginate(5);
-        return view('dashboard.authors.index', compact('authors'));
+        return view('dashboard.authors.index', compact('authors'))->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
     public function create()

@@ -116,7 +116,7 @@
                 <div class='text book-text'>
                     <span class='genre text-primary'>
                         @foreach ($book->genres as $genre)
-                            {{ $genre->name }} |
+                            {{ $genre->name }} @if (!$loop->last) | @endif
                         @endforeach
                     </span>
                     <h1 class='title my-3'>

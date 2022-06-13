@@ -241,16 +241,16 @@ header .nav-item a.active{
     font-family: titleBoldFont;
     margin: 0;
 }
-.books .book-list .book-cover{
+.books .book-cover{
     width: 100%;
     height: 250px;
     object-fit: contain;
 }
-.books .book-list .book-title{
+.books .book-title{
     text-transform: capitalize;
     font-family: titleRegularFont;
 }
-.books .book-list .book-title a{
+.books .book-title a{
     text-decoration: none;
 }
 
@@ -305,61 +305,6 @@ header .nav-item a.active{
     background: var(--dark-color);
     color:#fff;
 }
-
-
-/* .book-card .mask{
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    overflow: hidden;
-    top: 0;
-    left: 0;
-    background-color: rgba(18, 63, 211, 0.3);
-    transition: all 0.5s linear;
-    opacity: 1;
-}
-.book-card:hover .mask {
-    opacity: 1;
-}
-.book-card img {
-    overflow: hidden;
-    max-width: 300px;
-    height: 250px;
-    position: relative;
-    transition: all 0.7s ease-in-out;
-}
-.book-card:hover img {
-    transform: scale(10);
-    opacity: 0;
-}
-.book-card .genres {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
-    background: transparent;
-    transform: scale(0);
-    transition: all 0.5s linear;
-    opacity: 0;
-    text-align: center;
-}
-.book-card .description {
-    opacity: 0;
-    transform: scale(0);
-    transition: all 0.5s linear;
-    font-family: Georgia, serif;
-    font-style: italic;
-    font-size: 12px;
-    text-align: center;
-}
-.book-card a.more {
-    display: inline-block;
-    opacity: 0;
-    transform: scale(0);
-    transition: all 0.5s linear;
-    text-align: center;
-}
-.book-card:hover .genres,.book-card:hover .description,.book-card:hover a.more {
-    transform: scale(1);
-    opacity: 1;
-} */
 
 
 
@@ -442,15 +387,3 @@ header .nav-item a.active{
 	background-color: #ffffff;
 }
 
-
-/* Blogs Home Section */
-
-/* .home-img{
-    max-height: 300px;
-    object-fit: contain;
-}
-.author{
-    font-family: bodyRegularFont;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-} */

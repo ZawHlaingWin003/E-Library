@@ -5,8 +5,8 @@
 @section('content')
 <div class="container">
     <a href="#" class="btn btn-primary mb-3"><i class="fa fa-plus"></i> Add Admin User</a>
-    <a href="{{ route('admin_users.export') }}" class="btn btn-dark mb-3 float-end"><i class="far fa-clock"></i> Export To Excel</a>
-    <a href="{{ route('upload.admin_users') }}" class="btn btn-dark mb-3">Import Excel Data <i class="fa fa-arrow-right"></i></a>
+    <a href="{{ route('admin_users.export') }}" class="btn btn-dark mb-3 float-end"><i class="fa fa-file-export"></i> Export To Excel</a>
+    <a href="{{ route('upload.admin_users') }}" class="btn btn-dark mb-3">Import Excel Data <i class="fa fa-file-import"></i></a>
     <div class="table-responsive">
         @if (session('success'))
             <p class="alert alert-success">{{ session('success') }}</p>
@@ -25,7 +25,7 @@
             <tbody>
                 @foreach ($admin_users as $admin_user)
                 <tr>
-                    <td>{{ $loop->iteration }}</td>
+                    <td>{{ ++$i }}</td>
                     <td class="txt-oflo">{{ $admin_user->name }}</td>
                     <td>{{ $admin_user->email }}</td>
                     <td class="txt-oflo">{{ $admin_user->phone }}</td>

@@ -21,9 +21,13 @@
             <div class="col-md-6 col-sm-12">
                 <div class="swiper stand-books-slider">
                     <div class="swiper-wrapper">
-                        @foreach ($latestBooks as $book)
-                            <a href="" class="swiper-slide"><img src="{{ asset('covers/'.$book->cover) }}" alt=""></a>
-                        @endforeach
+                        <a href="" class="swiper-slide"><img src="{{ asset('frontend/assets/images/books/book-1.png') }}" alt=""></a>
+                        <a href="" class="swiper-slide"><img src="{{ asset('frontend/assets/images/books/book-2.png') }}" alt=""></a>
+                        <a href="" class="swiper-slide"><img src="{{ asset('frontend/assets/images/books/book-3.png') }}" alt=""></a>
+                        <a href="" class="swiper-slide"><img src="{{ asset('frontend/assets/images/books/book-4.png') }}" alt=""></a>
+                        <a href="" class="swiper-slide"><img src="{{ asset('frontend/assets/images/books/book-5.png') }}" alt=""></a>
+                        <a href="" class="swiper-slide"><img src="{{ asset('frontend/assets/images/books/book-6.png') }}" alt=""></a>
+
                     </div>
                     <img src="{{ asset('frontend/assets/images/stand.png') }}" class="stand" alt="">
                 </div>
@@ -82,7 +86,7 @@
                             <img src="{{ asset('covers/'.$book->cover) }}" alt="" class="book-cover">
                             <hr>
                             <h3 class="book-title text-center"><a href="{{ route('books.show', $book) }}">{{ $book->name }}</a></h3>
-                            <p class="book-author text-center mt-3">By : <a href="">{{ $book->author->name }}</a></p>
+                            <p class="book-author text-center mt-3">By : <a href="{{ route('authors.show', $book->author->id) }}">{{ $book->author->name }}</a></p>
                             <a href="{{ route('books.show', $book) }}" class="btn btn-primary primary-btn">Read More</a>
                         </div>
                     </div>
@@ -99,12 +103,59 @@
 <section class="newsletter">
 
     <div class="container">
-        <form action="#">
+        <form action="{{ route('newsletter.subscribe') }}" method="POST" id="subscribe-form">
+            @csrf
             <h2 class="title">subscribe for latest updates</h2>
-            <input type="email" name="" class="form-control my-3" placeholder="Enter Your Email" id="" class="box">
-            <button type="submit" class="btn primary-btn">Subscribe</button>
+            <div id="response" class="d-none"></div>
+            <input type="email" name="email" class="form-control mt-3 @error('email') is-invalid @enderror" placeholder="Enter Your Email" id="email" class="box" value="{{ old('email') }}">
+            <small><span class="text-danger error email__err"></span></small><br>
+
+            <button type="submit" class="btn primary-btn" id="btn">Subscribe</button>
         </form>
     </div>
 
 </section>
+@endsection
+
+
+@section('custom_script')
+<script>
+    $(document).ready(function(){
+        $('#subscribe-form').submit(function (e) {
+            e.preventDefault();
+            let url = $(this).attr('action');
+            $("#btn").attr('disabled', true).css('cursor', 'wait');
+
+            var _token = $("input[name='_token']").val();
+            var email = $("#email").val();
+
+            console.log(email);
+
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: {_token:_token, email:email},
+                dataType: "json",
+                beforeSend: function(){
+                    $('.error').text('');
+                },
+                success: function (data) {
+                    if(data.code == 200){
+                        let success = '<p class="alert alert-success">'+data.response+'</p>';
+
+                        $("#response").addClass('d-block').removeClass('d-none').html(success);
+                        $("#subscribe-form")[0].reset();
+                        $("#btn").attr('disabled', false).css('cursor', 'pointer');
+
+                    }else if(data.code == 400){
+                        $.each(data.response, function (key, value) {
+                            $("."+key+"__err").text(value);
+                            $("#btn").attr('disabled', false).css('cursor', 'pointer');
+                        });
+                    }
+                }
+            });
+        });
+    })
+</script>
 @endsection

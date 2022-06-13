@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Models\Book;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 
 class HomeController extends Controller
 {
@@ -16,7 +17,11 @@ class HomeController extends Controller
      */
     public function __invoke(Request $request)
     {
-        $latestBooks = Book::latest()->take(10)->get();
+        /* DB::listen(function ($query) {
+            logger($query->sql, $query->bindings);
+        }); */
+
+        $latestBooks = Book::with('author')->latest()->take(10)->get();
         return view('frontend.pages.home', compact('latestBooks'));
     }
 }
