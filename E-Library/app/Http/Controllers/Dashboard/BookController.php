@@ -14,23 +14,13 @@ use Cviebrock\EloquentSluggable\Services\SlugService;
 
 class BookController extends Controller
 {
-    public function uploadExcel()
-    {
-        return view('dashboard.books.import');
-    }
-
-    public function import(Request $request)
-    {
-        if($request->hasFile('books')){
-            Excel::import(new BooksImport, $request->file('books'));
-            return redirect()->route('books.index')->with('success', 'Books Imported Successfully!');
-        }
-    }
 
     public function index()
     {
+
+        $latestBook = Book::latest()->first();
         $books = Book::with('author')->latest()->get();
-        return view('frontend.pages.books', compact('books'));
+        return view('frontend.pages.books', compact('books', 'latestBook'));
     }
 
     public function list()
@@ -75,20 +65,18 @@ class BookController extends Controller
         $cover_file_path = date('YmdHis')."-".strtolower(str_replace(' ', '', $request->slug)).'.'.$request->file('cover')->getClientOriginalExtension();
         $destinationPath = 'covers/';
         $cover->move($destinationPath, $cover_file_path);
-
         $book->cover = $cover_file_path;
 
         $pdf_file = $request->file('pdf_file');
         $pdf_file_path = date('YmdHis')."-".strtolower(str_replace(' ', '', $request->slug)).'.'.$request->file('pdf_file')->getClientOriginalExtension();
         $destinationPath = 'pdf_files/';
         $pdf_file->move($destinationPath, $pdf_file_path);
-
         $book->pdf_file = $pdf_file_path;
+
+        $book->save();
 
         $genres = Genre::find($request->genres);
         $book->genres()->attach($genres);
-
-        $book->save();
 
         return back()->with('success', 'New book ('.$book->name.') added successfully!');
     }

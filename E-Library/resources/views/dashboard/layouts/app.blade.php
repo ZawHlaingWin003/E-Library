@@ -128,7 +128,7 @@
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link {{ request()->is('admin/genres') || request()->is('admin/genres/create') || request()->is('admin/genres/*/edit') ? 'active' : '' }}" href="{{ route('genres.index') }}">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link {{ request()->is('admin/genre_list') || request()->is('admin/genres/create') || request()->is('admin/genres/*/edit') ? 'active' : '' }}" href="{{ route('genres.list') }}">
                                 <i class="fa fa-list"></i>
                                 <span class="hide-menu">Genres</span>
                             </a>

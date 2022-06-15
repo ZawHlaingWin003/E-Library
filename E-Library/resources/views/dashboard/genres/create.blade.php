@@ -1,6 +1,6 @@
 @extends('dashboard.layouts.app')
 
-@section('title', 'Crete New Genres')
+@section('title', 'Crete New Genre')
 
 @section('content')
 <div class="container">
@@ -13,18 +13,24 @@
                 <form action="{{ route('genres.store') }}" method="POST" enctype="multipart/form-data" autocomplete="off">
                     @csrf
 
-                    <div class="form-group mb-3">
+                    <div class="form-group mb-5">
                         <label for="name" class="form-label">Enter Genres</label>
                         <input type="text" name="name" id="name" class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}" autofocus>
                         @error('name')
                             <small><span class="text-danger">* {{ $message }}</span></small><br>
                         @enderror
-                        <small>* You can create multiple genres. Enter comma between each genres.</small>
+                    </div>
+                    <div class="form-group mb-5">
+                        <label for="image" class="form-label">Genre Image</label>
+                        <input type="file" name="image" id="image" class="form-control @error('image') is-invalid @enderror" value="{{ old('image') }}">
+                        @error('image')
+                            <small><span class="text-danger">* {{ $message }}</span></small><br>
+                        @enderror
                     </div>
 
                     <div class="form-group mb-3">
                         <button class="btn btn-primary" type="submit">Add Genres <i class="fa fa-plus"></i></button>
-                        <a href="{{ route('genres.index') }}" class="btn btn-danger">Cancle</a>
+                        <a href="{{ route('genres.list') }}" class="btn btn-danger">Cancle</a>
                     </div>
                 </form>
             </div>

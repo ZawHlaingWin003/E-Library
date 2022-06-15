@@ -20,9 +20,6 @@
 .biography{
     text-indent: 80px;
 }
-.published-books .title{
-    font-family: titleBoldFont;
-}
 </style>
 @endsection
 

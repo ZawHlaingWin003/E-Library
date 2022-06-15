@@ -13,6 +13,7 @@
                     <th class="border-top-0">#</th>
                     <th class="border-top-0">Name</th>
                     <th class="border-top-0">Email</th>
+                    <th class="border-top-0">Phone</th>
                     <th class="border-top-0">Ip Address</th>
                     <th class="border-top-0">Last Login at</th>
                 </tr>
@@ -23,6 +24,7 @@
                     <td>{{ ++$i }}</td>
                     <td class="txt-oflo">{{ $user->name }}</td>
                     <td>{{ $user->email }}</td>
+                    <td>{{ $user->phone }}</td>
                     <td><span class="text-success">{{ $user->ip ? $user->ip : 'Haven\'t Login yet' }}</span></td>
                     <td class="text-success">
                         @if ($user->last_login_at)

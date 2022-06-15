@@ -7,14 +7,16 @@
     <div class="row justify-content-center">
         <div class="col-md-8 mt-5">
             <div class="card p-3">
+                @if ($errors->any())
+                    @foreach ($errors->all() as $error)
+                        <small><p class="alert alert-danger">* {{ $error }}</p></small>
+                    @endforeach
+                @endif
                 <form action="{{ route('admin_users.import') }}" method="POST" enctype="multipart/form-data">
                     @csrf
 
                     <div class="form-group mb-3">
                         <input type="file" name="admin_users" id="" class="form-control @error('admin_users') is-invalid @enderror">
-                        @error('admin_users')
-                            <small><span class="text-danger">* {{ $message }}</span></small>
-                        @enderror
                     </div>
 
                     <button type="submit" class="btn btn-primary my-3">Import Excel</button>

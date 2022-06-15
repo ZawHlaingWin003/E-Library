@@ -45,24 +45,6 @@
                 @endforeach
             </div>
         </div>
-        {{-- <div id="not_found">
-            <table class="table table-bordered border-primary">
-                <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>Title</th>
-                    </tr>
-                </thead>
-                <tbody id="search_list" class="text-center">
-                    @foreach ($authors as $key => $author)
-                        <tr>
-                            <td>{{ ++$key }}</td>
-                            <td><a href="#">{{ $author->name }}</a></td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div> --}}
     </div>
 </section>
 @endsection

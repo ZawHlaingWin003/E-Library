@@ -23,6 +23,7 @@
     width: 80%;
     height: 100vh;
     margin: 0 auto;
+    border: 5px solid #000;
 }
 
 
@@ -134,14 +135,14 @@
                     <article class='description my-3'>
                         {{ $book->excerpt }}
                     </article>
-                    <a href="#">Start Reading</a>
+                    <a href="#">Download</a>
                 </div>
             </div>
         </div>
 
 
         <div class="pdf-wrapper">
-            <iframe src="{{ asset('pdf_files/'.$book->pdf_file) }}" class="pdf">
+            <iframe src="{{ asset('pdf_files/'.$book->pdf_file) }}#toolbar=0" id="pdf_file" class="pdf">
                 This browser does not support PDFs. Please download the PDF to view it: Download PDF.
             </iframe>
         </div>

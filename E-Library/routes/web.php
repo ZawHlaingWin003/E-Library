@@ -33,6 +33,10 @@ Route::get('/authors', [AuthorController::class, 'index'])->name('authors.index'
 Route::get('/search', [AuthorController::class, 'search']);
 Route::get('/authors/{author}', [AuthorController::class, 'show'])->name('authors.show');
 
+
+Route::get('/genres', [GenreController::class, 'index'])->name('genres.index');
+Route::get('/genres/{genre}', [GenreController::class, 'show'])->name('genres.show');
+
 Auth::routes();
 
 Route::get('/2fa', [UserCodeController::class, 'index'])->name('2fa.index');
@@ -63,7 +67,8 @@ Route::prefix('admin')->group(function(){
         Route::get('/author_list', [AuthorController::class, 'list'])->name('authors.list');
         Route::resource('/authors', AuthorController::class)->except('index', 'show');
 
-        Route::resource('/genres', GenreController::class);
+        Route::get('/genre_list', [GenreController::class, 'list'])->name('genres.list');
+        Route::resource('/genres', GenreController::class)->except('index', 'show');
 
         Route::get('/subscribed_list', [NewsletterController::class, 'list'])->name('subscribed_list');
 

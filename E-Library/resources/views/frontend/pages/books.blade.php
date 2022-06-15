@@ -25,17 +25,17 @@
     <div class="container">
         <div class="row">
             <div class="col-md-7 col-sm-12">
-                <h6 class="author">author: sayar soe</h6>
-                <h1 class="title display-4 my-2">EXCITING ADVENTURE</h1>
+                <h6 class="author"><a href="{{ route('authors.show', $latestBook->author->id) }}">author: {{ $latestBook->author->name }}</a></h6>
+                <h1 class="title display-5 my-2">{{ $latestBook->name }}</h1>
                 <p class="description">
-                    Writing with depth, wit, and insight, Ingrid Fetell Lee shares all you need to know in order to create external environments that give rise to inner joy.
+                    {{ $latestBook->excerpt }}
                 </p>
-                <button class="btn btn-primary primary-btn">
+                <a href="{{ route('books.show', $latestBook) }}" class="btn btn-primary primary-btn">
                     Read Now
-                </button>
+                </a>
             </div>
             <div class="col-md-5 col-sm-12">
-                <img src="{{ asset('frontend/assets/images/books/book-12.png') }}" class="img-fluid w-100 home-img" alt="Book" />
+                <img src="{{ asset('covers/'.$latestBook->cover) }}" class="img-fluid w-100 home-img" alt="Book" />
             </div>
         </div>
     </div>

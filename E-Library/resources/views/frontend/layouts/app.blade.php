@@ -19,9 +19,9 @@
 </head>
 <body>
     <!-- Loader  -->
-    <div class="loader-container">
+    {{-- <div class="loader-container">
         <img src="{{ asset('frontend/assets/images/loader-img.gif') }}" alt="Loader GIF">
-    </div>
+    </div> --}}
 
 
     <!-- Navbar -->
@@ -44,6 +44,9 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link {{ request()->is('authors') || request()->is('authors/*') ? 'active' : '' }}" href="{{ route('authors.index') }}">Authors</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link {{ request()->is('genres') || request()->is('genres/*') ? 'active' : '' }}" href="{{ route('genres.index') }}">Genres</a>
                             </li>
                             @guest
                                 @if (Route::has('login'))

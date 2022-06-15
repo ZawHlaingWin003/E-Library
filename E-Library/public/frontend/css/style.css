@@ -328,8 +328,6 @@ header .nav-item a.active{
 }
 
 
-
-
 /* Footer Section */
 .footer{
     font-family: bodyRegularFont;
@@ -387,3 +385,9 @@ header .nav-item a.active{
 	background-color: #ffffff;
 }
 
+
+
+
+.title{
+    font-family: titleBoldFont;
+}
