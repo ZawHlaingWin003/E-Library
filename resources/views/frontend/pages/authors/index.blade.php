@@ -40,7 +40,7 @@
                 </strong>
             </div>
             <div id="result">
-                <div class="row author-list" id="author-list">
+                <div class="row author-list gx-2 gx-md-4" id="author-list">
 
                 </div>
             </div>
@@ -79,7 +79,7 @@
                         } else {
                             $.each(response.authors, function(index, value) {
                                 output += `
-                                <div class="col-md-3 my-3">
+                                <div class="col-6 col-md-3 my-3">
                                     <div class="card text-center">
                                         <div class="card-body">
                                             <div class="profile">

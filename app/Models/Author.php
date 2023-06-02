@@ -19,7 +19,7 @@ class Author extends Model
     {
         return asset("storage/authors/$value");
     }
-
+    
     public function books()
     {
         return $this->hasMany(Book::class);

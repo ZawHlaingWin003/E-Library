@@ -41,7 +41,6 @@
                         $('.error').text('');
                     },
                     success: function(data) {
-                        console.log(data)
                         if (data.code == 200) {
                             let success = '<p class="alert alert-success">' + data.response +
                                 '</p>';

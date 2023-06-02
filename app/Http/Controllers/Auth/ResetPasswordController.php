@@ -21,6 +21,11 @@ class ResetPasswordController extends Controller
 
     use ResetsPasswords;
 
+    protected function setUserPassword($user, $password)
+    {
+        $user->password = $password;
+    }
+
     /**
      * Where to redirect users after resetting their password.
      *

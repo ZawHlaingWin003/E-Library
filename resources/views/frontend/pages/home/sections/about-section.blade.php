@@ -8,8 +8,8 @@
                 tedious tasks easier, less stressful.</p>
         </div>
     </div>
-    <div class="container-fluid text-center rect-container">
-        <div class="numbers d-flex flex-md-row flex-wrap justify-content-center">
+    <div class="container rect-container">
+        <div class="numbers">
             <div class="rect">
                 <h1 class="display-3 title">145</h1>
                 <p>Good Books</p>

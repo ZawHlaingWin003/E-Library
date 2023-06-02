@@ -19,18 +19,11 @@
             @csrf
             <div class="form-group">
                 <label for="name">Name:</label>
-                <input type="text" name="name" id="name"
-                    class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}">
-                @error('name')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
+                <input type="text" name="name" id="name" class="form-control">
             </div>
             <div class="form-group">
                 <label for="body">Comment:</label>
-                <textarea name="body" id="body" rows="4" class="form-control @error('body') is-invalid @enderror">{{ old('body') }}</textarea>
-                @error('body')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
+                <textarea name="body" id="body" rows="4" class="form-control"></textarea>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
@@ -66,6 +59,8 @@
                 var method = form.attr('method');
                 var formData = form.serialize();
 
+                console.log("Form Data", formData)
+
                 $('#comment-status').html('');
                 $('#loading-spinner').show();
 
@@ -85,6 +80,7 @@
                     error: function(xhr) {
                         if (xhr.status === 422) {
                             var errors = xhr.responseJSON.errors;
+                            console.log(errors)
                             $('.error-message').remove();
                             $('.is-invalid').removeClass('is-invalid');
 

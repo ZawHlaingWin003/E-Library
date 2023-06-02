@@ -4,8 +4,8 @@
         <h1 class="heading my-5"> <span>let's read books</span> </h1>
 
         <div class="recent-book-list">
-            <div class="d-flex justify-content-between align-items-center">
-                <h3 class="title">Popular Book List</h3>
+            <div class="d-md-flex justify-content-between align-items-center">
+                <h3 class="title mb-2 mb-md-0">Popular Book List</h3>
                 <a href="{{ route('books.index') }}" class="btn btn-primary primary-btn">View All</a>
             </div>
             <hr>

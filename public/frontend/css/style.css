@@ -26,6 +26,8 @@
 :root {
     --primary-color: #0b5ed7;
     --dark-color: #24262b;
+    --light-dark: #474747;
+    --light: #F2F2F2;
 }
 
 html {
@@ -88,6 +90,13 @@ section {
 .primary-input:focus {
     outline: none;
     border: 1px solid var(--primary-color);
+}
+.primary-input.error {
+    border: 1px solid red;
+}
+.error-message {
+    color: red;
+    font-size: 0.8rem;
 }
 
 /* Main Button */
@@ -159,6 +168,14 @@ section {
     background: #fff;
 }
 
+@media screen and (max-width: 768px) {
+    .heading span {
+        font-size: 1.7rem;
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+}
+
 /* Navbar */
 header .navbar-brand {
     font-family: titleBoldFont;
@@ -212,7 +229,7 @@ header .nav-item a.active {
 /* About */
 .cover {
     width: 100%;
-    height: 55vmin;
+    height: 100%;
     background: url("../assets/images/book-library.jpg");
     background-position: center center;
     background-size: 100%;
@@ -232,7 +249,7 @@ header .nav-item a.active {
     width: 100%;
     height: 100%;
     background: rgba(0, 0, 0, 0.7);
-    padding-top: 19vmin;
+    padding: 8rem 0;
 }
 
 .cover .content > h1 {
@@ -253,6 +270,11 @@ header .nav-item a.active {
     -ms-transform: translate(-50%, 50%);
     -o-transform: translate(-50%, 50%);
 }
+.numbers {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 .numbers .rect {
     background: white;
     width: 17rem;
@@ -267,8 +289,22 @@ header .nav-item a.active {
 }
 
 @media screen and (max-width: 768px) {
+    .cover .content {
+        padding: 3rem 1rem;
+    }
     .rect-container {
         position: relative;
+        padding-top: 1rem;
+        transform: translate(0, 0);
+        left: 0;
+    }
+    .numbers {
+        flex-wrap: wrap;
+    }
+    .numbers .rect {
+        width: 8rem;
+        height: 6rem;
+        margin: 0.5rem;
     }
 }
 
@@ -280,17 +316,19 @@ header .nav-item a.active {
     font-family: titleBoldFont;
     margin: 0;
 }
-.popular-books .book-cover {
+
+/* Book Card */
+.book-card .book-cover {
     width: 100%;
     height: 250px;
     object-fit: contain;
 }
-.popular-books .book-title {
+.book-card .book-title {
     text-transform: capitalize;
-    font-family: titleRegularFont;
 }
-.popular-books .book-title a {
+.book-card .book-title a {
     text-decoration: none;
+    font-family: titleRegularFont;
 }
 
 .book-card {
@@ -346,6 +384,12 @@ header .nav-item a.active {
 .swiper-button-prev:hover {
     background: var(--dark-color);
     color: #fff;
+}
+
+@media screen and (max-width: 768px) {
+    .popular-books {
+        padding-top: 3rem;
+    }
 }
 
 /* Newsletter */

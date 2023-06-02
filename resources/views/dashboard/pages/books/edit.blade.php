@@ -82,7 +82,7 @@
                     @enderror
                     <div class="d-flex justify-content-around align-items-center my-3">
                         <h3>Old Image => </h3>
-                        <img src="{{ asset('covers/'.$book->cover) }}" alt="" class="img-fluid rounded" width="200" height="200">
+                        <img src="{{ $book->cover }}" alt="" class="img-fluid rounded" width="200" height="200">
                     </div>
                 </div>
                 <div class="form-group mb-4">
@@ -93,7 +93,7 @@
                     @enderror
                     <div class="d-flex justify-content-around align-items-center my-3">
                         <h3>Old PDF file => </h3>
-                        <iframe src="{{ asset('pdf_files/'.$book->pdf_file) }}" class="pdf">
+                        <iframe src="{{ $book->pdf_file }}" class="pdf">
                             This browser does not support PDFs. Please download the PDF to view it: Download PDF.
                         </iframe>
                     </div>

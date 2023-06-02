@@ -1,3 +1,7 @@
+@props([
+    'book'
+])
+
 <div {{ $attributes->merge(['class' => 'book-card']) }}>
     <div class="card p-3 border-0">
         <img src="{{ $book->cover }}" alt="" class="book-cover">

@@ -6,7 +6,7 @@
     }, 4000);
 }; */
 
-$(window).on("load", function(){
+$(window).on("load", function () {
     $('.loader-container').fadeOut("slow");
 });
 
@@ -59,3 +59,24 @@ var swiper = new Swiper(".books-slider", {
         },
     },
 });
+
+const fetchData = (elementContainer, loaderHTML, url, data = {}) => {
+    return new Promise((resolve, reject) => {
+        $.ajax({
+            type: "GET",
+            url: url,
+            data: data,
+            dataType: "JSON",
+            beforeSend: function () {
+                // Show the Loading Spinner
+                elementContainer.html(loaderHTML)
+            },
+            success: function (response) {
+                resolve(response);
+            },
+            error: function (error) {
+                reject(error);
+            },
+        });
+    });
+};

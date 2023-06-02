@@ -34,21 +34,16 @@
             font-size: 1.5rem;
             color: gray;
         }
-
+        
         .pdf-wrapper .link-title a:hover {
             color: rgb(90, 90, 90);
         }
-
+        
         .pdf {
             width: 80%;
             height: 85vh;
             margin: 0 auto;
             border: 5px solid #000;
-        }
-        @media screen and (max-width: 768px) {
-            .pdf-wrapper .link-title, .pdf {
-                width: 100%
-            }
         }
 
 
@@ -146,8 +141,7 @@
 
 @section('content')
     <section class='book-section container'>
-        <x-link-button href="{{ route('books.index') }}" loaderId="go-back-button-loader" class="mb-5"
-            iconName="fa-arrow-left">
+        <x-link-button href="{{ route('books.index') }}" loaderId="go-back-button-loader" class="mb-5" iconName="fa-arrow-left">
             To Library
         </x-link-button>
 
@@ -183,35 +177,33 @@
         });
 
         $(document).ready(function() {
-            let authCheck = !!{{ auth()->check() }} // Is user authenticated or not
+            let authCheck = !!{{ auth()->check() }}
             let authUserId = {{ auth()->id() }}
             let bookId = {{ $book->id }}
 
             const getBookReviews = () => {
+                let loader = `
+                <div class="my-3 d-flex justify-content-center align-items-center" id="review-section-loader">
+                    <div class="custom-loader section-loader"></div>
+                </div>
+                `;
+
+                $('#review-list').html(loader)
+
                 $.ajax({
                     type: "GET",
-                    url: "{{ route('reviews.index') }}",
+                    url: "{{ route('review.index') }}",
                     data: {
                         'bookId': bookId
-                    },
-                    beforeSend: function() {
-                        // Show the Loading Spinner
-                        let loader = `
-                            <div class="my-3 d-flex justify-content-center align-items-center" id="review-section-loader">
-                                <div class="custom-loader section-loader"></div>
-                            </div>
-                            `;
-
-                        $('#review-list').html(loader)
                     },
                     success: function(response) {
                         $('#total-reviews').html(response.reviews.length)
                         let output = '';
                         $.each(response.reviews, function(index, review) {
-                            let userId = review.user.id
+                            let user_id = review.user.id
                             let actionsHtml = '';
 
-                            if (authCheck && authUserId == userId) {
+                            if (authCheck && authUserId == review.user_id) {
                                 actionsHtml += `
                                 <div class="actions">
                                     <button class="btn btn-sm btn-primary mx-3" id="edit-review-button"
@@ -254,20 +246,6 @@
                 });
             }
 
-            // Get All Validation Error Messages
-            const getValidationErrorMessages = (errors, update = false) => {
-                $.each(errors, function(field, messages) {
-                    if (update) {
-                        var input = $('#update' + '-' + field);
-                    } else {
-                        var input = $('#' + field);
-                    }
-                    var errorMessage = `<span class="error-message">${messages[0]}</span>`;
-                    input.addClass('error');
-                    input.after(errorMessage);
-                });
-            }
-
             // Get All Book Reviews
             getBookReviews();
 
@@ -275,47 +253,44 @@
             $('#add-review-form').submit(function(e) {
                 e.preventDefault();
 
-                $('#add-review-button-loader').show();
-                $('#add-review-button-icon').hide();
-                $("#add-review-button").attr('disabled', true);
+                $("#add-review-button-loader").removeClass('d-none').addClass('d-block');
+                $("#add-review-button-icon").removeClass('d-block').addClass('d-none');
+                $("#add-review-button").attr('disabled', true).css('cursor', 'not-allowed');
 
-                $('.error').removeClass('error');
-                $('.error-message').remove();
-
-                var form = $(this);
-                var url = form.attr('action');
-                var method = form.attr('method');
-                var formData = form.serialize();
+                let url = $(this).attr('action');
+                let data = {
+                    'bookId': bookId,
+                    'content': $('#content-field').val()
+                }
 
                 $.ajax({
+                    type: "POST",
                     url: url,
-                    type: method,
-                    data: formData,
-                    success: function(response) {
-                        $('#add-review-form')[0].reset();
-                        toastr.success(response.message);
-                        getBookReviews();
-                    },
-                    error: function(xhr) {
-                        if (xhr.status === 422) {
-                            var errors = xhr.responseJSON.errors;
-                            getValidationErrorMessages(errors)
-                        } else {
-                            alert(xhr.status)
+                    data: data,
+                    success: function(data) {
+                        console.log(data)
+                        if (data.status == 201) {
+                            $("#add-review-form")[0].reset();
+                            getBookReviews();
+                            toastr.success(data.response);
+                        } else if (data.status == 400) {
+                            $.each(data.response, function(key, value) {
+                                $("." + key + "-error").text(value);
+                                $("#" + key + "-field").css("border-color", "red")
+                            });
                         }
-                    },
-                    complete: function() {
-                        $('#add-review-button-loader').hide();
-                        $('#add-review-button-icon').show();
-                        $("#add-review-button").attr('disabled', false);
+
+                        $('#add-review-button-loader').removeClass('d-block').addClass('d-none')
+                        $("#add-review-button-icon").removeClass('d-none').addClass('d-block');
+                        $("#add-review-button").attr('disabled', false).css('cursor', 'pointer')
                     }
                 });
             })
 
             // Delete Review
             $(document).on('click', '#delete-review-button', function() {
-                let reviewId = $(this).data('id');
-                let url = `/reviews/${reviewId}`
+                let review_id = $(this).data('id');
+                let url = `/reviews/destroy/${review_id}`
 
                 swal.fire({
                     title: 'Are you sure?',
@@ -324,7 +299,7 @@
                     cancelButtonText: 'Cancel',
                     confirmButtonText: 'Yes',
                     cancelButtonColor: '#d33',
-                    confirmButtonColor: '#0b5ed7',
+                    confirmButtonColor: '#556ee6',
                     width: 300,
                     allowOutsideClick: false
                 }).then(function(result) {
@@ -333,6 +308,7 @@
                             type: "DELETE",
                             url: url,
                             success: function(response) {
+                                console.log(response)
                                 getBookReviews();
                                 toastr.success("Review deleted successfully");
                             }
@@ -341,22 +317,16 @@
                 });
             });
 
-            // Get Clicked Review Data and Open Review Edit Modal
+            // Open Review Edit Modal
             $(document).on('click', '#edit-review-button', function() {
-                var reviewId = $(this).data('id');
-
-                $('.error').removeClass('error');
-                $('.error-message').remove();
-
+                var review_id = $(this).data('id');
                 $('#edit-form-loader').removeClass('d-none').addClass('d-block')
-                $('#update-review-form').hide();
-
-                $.get(`/reviews/${reviewId}`, function(data) {
+                $('#update-review-form').addClass('d-none');
+                $.get(`/reviews/${review_id}`, function(data) {
                     $('#update-review-id').val(data.id);
-                    $('#update-content').val(data.content);
-
+                    $('#update-review-content').val(data.content);
                     $('#edit-form-loader').removeClass('d-block').addClass('d-none')
-                    $('#update-review-form').show();
+                    $('#update-review-form').removeClass('d-none');
                 });
             });
 
@@ -364,42 +334,43 @@
             $('#update-review-form').submit(function(e) {
                 e.preventDefault();
 
-                $("#update-review-button-loader").show();
-                $("#update-review-button-icon").hide();
-                $("#update-review-button").attr('disabled', true);
+                $("#update-review-button-loader").removeClass('d-none').addClass('d-block');
+                $("#update-review-button-icon").removeClass('d-block').addClass('d-none');
+                $("#update-review-button").attr('disabled', true).css('cursor', 'not-allowed');
 
                 let reviewId = $('#update-review-id').val();
-                let content = $('#update-content').val();
+                let content = $('#update-review-content').val();
 
-                let url = `/reviews/${reviewId}`;
+                let url = `/reviews/update/${reviewId}`;
 
                 let data = {
                     'content': content
                 };
-
                 $.ajax({
                     type: "PUT",
                     url: url,
                     data: data,
                     success: function(data) {
-                        $("#update-review-form")[0].reset();
-                        $("#edit-review-modal").modal("hide")
-
-                        getBookReviews();
-                        toastr.success(data.message);
-                    },
-                    error: function(xhr) {
-                        if (xhr.status === 422) {
-                            var errors = xhr.responseJSON.errors;
-                            getValidationErrorMessages(errors, true)
-                        } else {
-                            alert(xhr)
+                        if (data.status == 200) {
+                            $("#update-review-form")[0].reset();
+                            $("#edit-review-modal").modal("hide")
+                            getBookReviews();
+                            toastr.success(data.response);
+                        } else if (data.status == 400) {
+                            $.each(data.response, function(key, value) {
+                                $(".update-" + key + "-error").text(value);
+                                toastr.error(value)
+                                setTimeout(() => {
+                                    $(".update-" + key + "-error").text('');
+                                }, 3000);
+                            });
                         }
-                    },
-                    complete: function() {
-                        $('#update-review-button-loader').hide();
-                        $('#update-review-button-icon').show();
-                        $("#update-review-button").attr('disabled', false);
+                        $('#update-review-button-loader').removeClass('d-block').addClass(
+                            'd-none')
+                        $("#update-review-button-icon").removeClass('d-none').addClass(
+                            'd-block');
+                        $("#update-review-button").attr('disabled', false).css('cursor',
+                            'pointer');
                     }
                 });
             })

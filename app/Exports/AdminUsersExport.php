@@ -9,13 +9,6 @@ use Maatwebsite\Excel\Concerns\FromCollection;
 
 class AdminUsersExport implements FromView
 {
-    /**
-    * @return \Illuminate\Support\Collection
-    */
-    /* public function collection()
-    {
-        return AdminUser::all();
-    } */
     public $admin_users;
 
     public function __construct($admin_users)
@@ -25,7 +18,7 @@ class AdminUsersExport implements FromView
 
     public function view(): View
     {
-        return view('dashboard.admin_users.export', [
+        return view('dashboard.pages.admin-users.export', [
             'admin_users' => $this->admin_users
         ]);
     }

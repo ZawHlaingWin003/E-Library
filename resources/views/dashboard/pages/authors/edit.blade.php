@@ -31,7 +31,7 @@
                     <input type="file" name="profile" id="" class="form-control @error('profile') is-invalid @enderror">
                     <div class="d-flex justify-content-between align-items-center my-3">
                         <h3>Old Image => </h3>
-                        <img src="{{ asset('profiles/'.$author->profile) }}" alt="" class="img-fluid rounded" width="200" height="200">
+                        <img src="{{ $author->profile }}" alt="" class="img-fluid rounded" width="200" height="200">
                     </div>
                     @error('profile')
                         <small><span class="text-danger">* {{ $message }}</span></small>

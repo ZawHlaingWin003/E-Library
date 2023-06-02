@@ -14,10 +14,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Testing Jquery Ajax
 Route::get('/comment-form', [CommentController::class, 'showForm']);
 Route::get('/comments', [CommentController::class, 'index'])->name('comments.index');
 Route::post('/comments', [CommentController::class, 'store'])->name('comments.store');
-Route::get('/comments/{id}/edit', [CommentController::class, 'edit'])->name('comments.edit');
+Route::get('/comments/{comment}/edit', [CommentController::class, 'edit'])->name('comments.edit');
 Route::put('/comments/{comment}', [CommentController::class, 'update'])->name('comments.update');
 Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
 

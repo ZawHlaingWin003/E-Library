@@ -2,14 +2,14 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Dashboard\BookController;
-use App\Http\Controllers\Dashboard\UserController;
 use App\Http\Controllers\Auth\AdminLoginController;
-use App\Http\Controllers\Dashboard\GenreController;
-use App\Http\Controllers\Dashboard\AuthorController;
-use App\Http\Controllers\Dashboard\AdminUserController;
-use App\Http\Controllers\Dashboard\DashboardController;
-use App\Http\Controllers\SubscribedUserController;
+use App\Http\Controllers\Backend\BookController;
+use App\Http\Controllers\Backend\UserController;
+use App\Http\Controllers\Backend\GenreController;
+use App\Http\Controllers\Backend\AuthorController;
+use App\Http\Controllers\Backend\AdminUserController;
+use App\Http\Controllers\Backend\DashboardController;
+use App\Http\Controllers\Backend\SubscribedUserController;
 
 /*
 |--------------------------------------------------------------------------
