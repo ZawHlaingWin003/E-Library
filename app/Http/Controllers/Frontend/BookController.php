@@ -25,7 +25,20 @@ class BookController extends Controller
 
     public function getBooks()
     {
-        $books = Book::with(['author', 'genres'])->latest()->get();
+        if (request()->page) {
+            $perPage = request()->perPage; // Number of records per page
+            $page = request()->get('page', 1); // Get the requested page number
+            $books = Book::filter(request(['search', 'genre', 'author']))
+            ->with(['author', 'genres'])
+            ->latest()
+            ->paginate($perPage, ['*'], 'page', $page);
+        } else {
+            $books = Book::filter(request(['search', 'genre', 'author']))
+                ->with(['author', 'genres'])
+                ->latest()
+                ->get();
+        }
+
         return ApiResponse::success($books);
     }
 
@@ -33,6 +46,4 @@ class BookController extends Controller
     {
         return view('frontend.pages.books.show', compact('book'));
     }
-
-    
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Helpers\ApiResponse;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Book;
@@ -17,9 +18,7 @@ class ReviewController extends Controller
             ->orderBy('updated_at', 'desc')
             ->get();
 
-        return response()->json([
-            'reviews' => $reviews
-        ]);
+        return ApiResponse::success($reviews);
     }
 
     public function store(Request $request)

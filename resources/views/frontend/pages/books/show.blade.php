@@ -45,8 +45,11 @@
             margin: 0 auto;
             border: 5px solid #000;
         }
+
         @media screen and (max-width: 768px) {
-            .pdf-wrapper .link-title, .pdf {
+
+            .pdf-wrapper .link-title,
+            .pdf {
                 width: 100%
             }
         }
@@ -176,83 +179,88 @@
 
 @section('custom_script')
     <script>
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-
         $(document).ready(function() {
+
             let authCheck = !!{{ auth()->check() }} // Is user authenticated or not
             let authUserId = {{ auth()->id() }}
             let bookId = {{ $book->id }}
 
-            const getBookReviews = () => {
-                $.ajax({
-                    type: "GET",
-                    url: "{{ route('reviews.index') }}",
-                    data: {
-                        'bookId': bookId
-                    },
-                    beforeSend: function() {
-                        // Show the Loading Spinner
-                        let loader = `
-                            <div class="my-3 d-flex justify-content-center align-items-center" id="review-section-loader">
-                                <div class="custom-loader section-loader"></div>
-                            </div>
-                            `;
+            // HTML codes which we want to render in page after fetch data
+            const renderBookReviewsHTML = (response) => {
+                $('#total-reviews').html(response.data.length)
 
-                        $('#review-list').html(loader)
-                    },
-                    success: function(response) {
-                        $('#total-reviews').html(response.reviews.length)
-                        let output = '';
-                        $.each(response.reviews, function(index, review) {
-                            let userId = review.user.id
-                            let actionsHtml = '';
+                let output = '';
+                $.each(response.data, function(index, data) {
+                    let userId = data.user.id
+                    let actionsHtml = '';
 
-                            if (authCheck && authUserId == userId) {
-                                actionsHtml += `
+                    if (authCheck && authUserId == userId) {
+                        actionsHtml += `
                                 <div class="actions">
                                     <button class="btn btn-sm btn-primary mx-3" id="edit-review-button"
-                                        data-id="${review.id}" data-bs-toggle="modal"
+                                        data-id="${data.id}" data-bs-toggle="modal"
                                         data-bs-target="#edit-review-modal">
                                         <i class="fa fa-edit"></i>
                                     </button>
-                                    <button class="btn btn-sm btn-danger" data-id="${review.id}"
+                                    <button class="btn btn-sm btn-danger" data-id="${data.id}"
                                         id="delete-review-button"><i class="fa fa-trash"></i></button>
                                 </div>
                                 `;
-                            }
+                    }
 
-                            output += `
+                    output += `
                             <div class="card review-card p-3 mb-3">
                                 <div class="d-flex gap-3">
                                     <div class="user-img">
-                                        <img src="https://ui-avatars.com/api/?name=${review.user.name}" alt="user-img"
+                                        <img src="https://ui-avatars.com/api/?name=${data.user.name}" alt="user-img"
                                             width="38" class="img-fluid rounded-circle" />
                                     </div>
                                     <div style="width: 100%;">
                                         <div class="d-flex justify-content-between align-items-center mb-3">
                                             <div class="info">
-                                                <p class="username">${review.user.name}</p>
-                                                <p class="review-at">${moment(review.updated_at).fromNow()}</p>
+                                                <p class="username">${data.user.name}</p>
+                                                <p class="review-at">${moment(data.updated_at).fromNow()}</p>
                                             </div>
                                             ${actionsHtml}
                                         </div>
                                         <div class="review-content">
-                                            <p>${review.content}</p>
+                                            <p>${data.content}</p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             `;
-                        });
-
-                        $('#review-list').html(output);
-                    }
                 });
+
+                return output;
             }
+
+            // data that we want to pass to request server
+            let data = {};
+
+            // Get All Books
+            const getBookReviews = () => {
+                const loaderHTML = `
+                            <div class="my-3 d-flex justify-content-center align-items-center" id="review-section-loader">
+                                <div class="custom-loader section-loader"></div>
+                            </div>
+                            `;
+
+                const elementContainer = $('#review-list');
+                const url = "{{ route('reviews.index') }}";
+
+                data = {
+                    'bookId': bookId
+                };
+
+                fetchData(elementContainer, loaderHTML, url, data)
+                    .then((response) => {
+                        elementContainer.html(renderBookReviewsHTML(response))
+                    })
+                    .catch(function(error) {
+                        console.error(error);
+                    });
+            };
 
             // Get All Validation Error Messages
             const getValidationErrorMessages = (errors, update = false) => {

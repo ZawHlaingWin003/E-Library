@@ -26,6 +26,55 @@ class Book extends Model
         'published_at'
     ];
 
+    // public function scopeFilter($query, $filter) //Blog::latest()->filter()
+    // {
+    //     $query->when($filter['search'] ?? false, function ($query, $search) {
+    //         $query->where(function ($query) use ($search) {
+    //             $query->where('title', 'LIKE', '%' . $search . '%')
+    //                 ->orWhere('body', 'LIKE', '%' . $search . '%');
+    //         });
+    //     });
+    //     $query->when($filter['category'] ?? false, function ($query, $slug) {
+    //         $query->whereHas('category', function ($query) use ($slug) {
+    //             $query->where('slug', $slug);
+    //         });
+    //     });
+    //     $query->when($filter['username'] ?? false, function ($query, $username) {
+    //         $query->whereHas('author', function ($query) use ($username) {
+    //             $query->where('username', $username);
+    //         });
+    //     });
+    // }
+
+    public function scopeFilter($query, $filters)
+    {
+        $query->when(
+            $filters['search'] ?? false,
+            fn ($query, $search) =>
+            $query->where('name', 'LIKE', '%' . $search . '%')
+                ->orWhere('excerpt', 'LIKE', '%' . $search . '%')
+        );
+
+        $query->when(
+            $filters['genre'] ?? false,
+            function ($query, $genreId) {
+                $query->whereHas('genres', function ($query) use ($genreId) {
+                    $query->where('genres.id', $genreId);
+                });
+            }
+        );
+
+        $query->when(
+            $filters['author'] ?? false,
+            fn ($query, $author) =>
+            $query->whereHas(
+                'author',
+                fn ($query) =>
+                $query->where('id', $author)
+            )
+        );
+    }
+
     public function getCoverAttribute($value)
     {
         return asset("storage/books/$this->slug/covers/$value");

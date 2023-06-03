@@ -60,6 +60,13 @@ var swiper = new Swiper(".books-slider", {
     },
 });
 
+// Fetch Api Data
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
+
 const fetchData = (elementContainer, loaderHTML, url, data = {}) => {
     return new Promise((resolve, reject) => {
         $.ajax({

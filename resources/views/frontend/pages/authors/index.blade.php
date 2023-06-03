@@ -41,7 +41,7 @@
             </div>
             <div id="result">
                 <div class="row author-list gx-2 gx-md-4" id="author-list">
-
+                    {{-- Render the author list HTML --}}
                 </div>
             </div>
         </div>
@@ -51,63 +51,70 @@
 @section('custom_script')
     <script>
         $(document).ready(function() {
+            // HTML codes which we want to render in page after fetch data
+            const renderAuthorsHTML = (response) => {
+                let output = '';
+                if (response.data.length == 0) {
+                    output += `
+                    <div class="w-100">
+                        <img src="/frontend/assets/images/404-page.png" class="w-50 d-flex mx-auto" alt="404 Page">
+                        <h3 class="text-danger text-center"><strong>Sorry 🙁, No Data Here ...</strong></h3>
+                    </div>
+                    `;
+                } else {
+                    $.each(response.data, function(index, data) {
+                        output += `
+                                <div class="col-6 col-md-3 my-3">
+                                    <div class="card text-center">
+                                        <div class="card-body">
+                                            <div class="profile">
+                                                <img src="${data.profile}" alt="Author Profile" class="img-fluid">
+                                            </div>
+                                        </div>
+                                        <div class="card-footer">
+                                            <p class="my-2"><a href="/authors/${data.id}">${data.name}</a></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                `;
+                    });
+                }
+
+                return output;
+            }
+
+            let data = {};
 
             // Get All Authors
-            const getAuthors = (query) => {
-                let loader = `
+            const getAuthors = () => {
+                const loaderHTML = `
                 <div class="col-md-6 offset-md-3" id="authors-page-loader">
                     <div class="custom-loader section-loader my-5 mx-auto"></div>
                 </div>
                 `;
 
-                $('#author-list').html(loader)
+                const elementContainer = $('#author-list');
+                const url = "{{ route('authors.getAuthors') }}";
 
-                $.ajax({
-                    type: "GET",
-                    url: "{{ route('authors.getAuthors') }}",
-                    data: {
-                        'search': query
-                    },
-                    dataType: "JSON",
-                    success: function(response) {
-                        console.log(response)
+                fetchData(elementContainer, loaderHTML, url, data)
+                    .then((response) => {
+                        elementContainer.html(renderAuthorsHTML(response))
+                    })
+                    .catch(function(error) {
+                        console.error(error);
+                    });
+            };
 
-                        let output = '';
-                        if (response.authors.length == 0) {
-                            output +=
-                                `<h3 class="text-danger text-center my-5">No Data Here ...</h3>`;
-                        } else {
-                            $.each(response.authors, function(index, value) {
-                                output += `
-                                <div class="col-6 col-md-3 my-3">
-                                    <div class="card text-center">
-                                        <div class="card-body">
-                                            <div class="profile">
-                                                <img src="${value.profile}" alt="Author Profile" class="img-fluid">
-                                            </div>
-                                        </div>
-                                        <div class="card-footer">
-                                            <p class="my-2"><a href="/authors/${value.id}">${value.name}</a></p>
-                                        </div>
-                                    </div>
-                                </div>
-                                `;
-                            });
-                        }
-
-                        $('#author-list').html(output)
-                    }
-                });
-            }
-
+            // Filter Authors By Search
             $('#search-author').keypress(function(e) {
                 // user must fill input with some text (except spaces)
                 // if ($.trim($(this).val()) && e.keyCode == 13) {
                 //     getAuthors($(this).val())
                 // }
+                data.search = $(this).val()
 
                 if (e.keyCode == 13) {
-                    getAuthors($(this).val())
+                    getAuthors()
                 }
             })
 

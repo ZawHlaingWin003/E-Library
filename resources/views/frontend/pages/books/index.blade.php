@@ -18,7 +18,7 @@
 
         .filters {
             background: var(--light);
-            padding: 2rem;
+            padding: 1rem;
             margin-bottom: 1rem;
         }
 
@@ -50,9 +50,20 @@
             background: #212121;
         }
 
+        .genre-item.active,
+        .author-item.active {
+            color: var(--light);
+            background: var(--primary-color);
+        }
+
+        .genre-item.active:hover,
+        .author-item.active:hover {
+            background: blue;
+        }
+
         .social-icons a {
-            width: 40px;
-            height: 40px;
+            width: 30px;
+            height: 30px;
             border-radius: 50%;
             color: white;
             background: var(--primary-color);
@@ -73,25 +84,12 @@
 @endsection
 
 @section('content')
-
-    <!-- Home -->
-    <section class="home text-center">
-        <div class="container text-center">
-            <h1 class="display-2 mb-4">
-                <i class="fa fa-running"></i> coming soon <i class="fa fa-running"></i>
-            </h1>
-            <p class="text-danger">This page is under construction!</p>
-        </div>
-    </section>
-
-    <hr>
-
     <section>
         <div class="container books-container">
-            <div class="row gx-4">
-                <div class="col-md-8">
+            <div class="d-flex gap-5">
+                <div class="w-75">
                     <div class="main-panel">
-                        <div class="filters row">
+                        {{-- <div class="filters row">
                             <div class="order-by-filter col-md-4">
                                 <select name="" id="" class="primary-input">
                                     <option value="" selected disabled>Order By</option>
@@ -104,18 +102,22 @@
                                     <option value="15">Price, High To Low</option>
                                 </select>
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="book-list row gy-4" id="book-list">
+                            <!-- Render your books HTML here -->
+                        </div>
+                        <div class="my-4" id="pagination-container">
+                            <!-- Display your paginated data here -->
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="w-25">
                     <div class="side-bar">
                         <div class="search">
-                            <form action="">
-                                <x-form-input name="search" placeholder="Search Keyword" />
-                                <x-main-button type="submit" buttonId="subscribe-button" loaderId="subscribe-button-loader"
-                                    class="w-100 justify-content-center my-3">
+                            <form id="search-book-form">
+                                <x-form-input name="search" id="search-book" placeholder="Search Keyword" />
+                                <x-main-button type="submit" buttonId="search-book-button"
+                                    loaderId="search-book-button-loader" class="w-100 justify-content-center my-3">
                                     Search
                                 </x-main-button>
                             </form>
@@ -126,12 +128,12 @@
                             </h4>
                             <hr>
                             <div class="genres-list d-flex flex-wrap gap-2">
-                                <p class="genre-item">
+                                <p class="genre-item active" id="genre-item">
                                     All
                                     ({{ count($books) }})
                                 </p>
                                 @foreach ($genres as $genre)
-                                    <p class="genre-item">
+                                    <p class="genre-item" id="genre-item" data-id="{{ $genre->id }}">
                                         {{ $genre->name }} ({{ count($genre->books) }})
                                     </p>
                                 @endforeach
@@ -157,7 +159,8 @@
                                                 data-bs-parent="#accordionFlushExample">
                                                 <div class="accordion-body d-flex flex-wrap gap-2">
                                                     @foreach ($value as $author)
-                                                        <p class="author-item">
+                                                        <p class="author-item" id="author-item"
+                                                            data-id="{{ $author->id }}">
                                                             {{ $author->name }} ({{ count($author->books) }})
                                                         </p>
                                                     @endforeach
@@ -173,11 +176,11 @@
                                 Follow us
                             </h4>
                             <hr>
-                            <p>
+                            <p class="text-center">
 
                                 Follow on Most Popular social community and receive NEW posts in your social line every day!
                             </p>
-                            <div class="social-icons mt-3 d-flex justify-content-between">
+                            <div class="social-icons px-4 mt-3 d-flex justify-content-between">
                                 <a href="#"><i class="fab fa-facebook-f"></i></a>
                                 <a href="#"><i class="fab fa-instagram-square"></i></a>
                                 <a href="#"><i class="fab fa-twitter"></i></a>
@@ -190,9 +193,7 @@
                             <x-form action="{{ route('newsletter.subscribe') }}" method="POST" id="subscribe-form">
                                 @csrf
 
-                                <div id="response" class="d-none"></div>
-
-                                <x-form-group class="mb-3">
+                                <x-form-group class="mb-3" id="email-input-group">
                                     <x-form-input type="email" name="email" placeholder="Enter Email" id="email" />
                                 </x-form-group>
 
@@ -213,101 +214,6 @@
 @endsection
 
 @section('custom_script')
-    <script>
-        $(document).ready(function() {
-
-            const renderBooksHTML = (response) => {
-                let output = '';
-                $.each(response.data, function(index, data) {
-                    output += `
-                    <div class="col-md-6">
-                        <div class="book-card border">
-                            <div class="card p-3 border-0">
-                                <img src="${data.cover}" alt="Book-Cover" class="book-cover">
-                                <hr>
-                                <h3 class="book-title text-center"><a href="books/${data.slug}">${data.name}</a></h3>
-                                <p class="book-author text-center mt-3">
-                                    By : 
-                                    <a href="/authors/${data.author}">
-                                        ${data.author.name}
-                                    </a>
-                                </p>
-                                <a href="books/${data.slug}" class="btn btn-primary primary-btn">
-                                    Read More
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    `
-                });
-
-                return output;
-            }
-
-            // Get All Books
-            const getBooks = () => {
-                const loaderHTML = `<div class="my-5 d-flex justify-content-center align-items-center" id="book-section-loader">
-                    <div class="custom-loader section-loader"></div>
-                </div>
-                `;
-
-                const elementContainer = $('#book-list');
-                const url = "{{ route('books.getBooks') }}";
-                console.log(elementContainer)
-
-                fetchData(elementContainer, loaderHTML, url)
-                    .then((response) => {
-                        console.log(response)
-                        elementContainer.html(renderBooksHTML(response))
-                        // elementContainer.html('Heyy')
-                    })
-                    .catch(function(error) {
-                        console.error(error);
-                    });
-            };
-            // const getBooks = () => {
-
-            //     $.ajax({
-            //         type: "GET",
-            //         url: "{{ route('books.getBooks') }}",
-            //         beforeSend: function() {
-            //             // Show the Loading Spinner
-            //             const loaderHTML = `<div class="my-5 d-flex justify-content-center align-items-center" id="book-section-loader">
-        //         <div class="custom-loader section-loader"></div>
-        //     </div>
-        //     `;
-            //             $('#book-list').html(loaderHTML)
-            //         },
-            //         success: function(response) {
-            //             console.log(response)
-            //             let output = '';
-            //             if (response.data.length == 0) {
-            //                 output +=
-            //                     `<h3 class="text-danger text-center my-5">No Data Here ...</h3>`;
-            //             } else {
-            //                 $.each(response.authors, function(index, value) {
-            //                     output += `
-        //                     `;
-            //                 });
-            //             }
-
-            //             $('#book-list').html(output)
-            //         }
-            //     });
-            // }
-
-            $('#search-author').keypress(function(e) {
-                // user must fill input with some text (except spaces)
-                // if ($.trim($(this).val()) && e.keyCode == 13) {
-                //     getAuthors($(this).val())
-                // }
-
-                if (e.keyCode == 13) {
-                    getAuthors($(this).val())
-                }
-            })
-
-            getBooks();
-        })
-    </script>
+    <script src="{{ asset('frontend/js/fetch/subscribe-form.js') }}"></script>
+    <script src="{{ asset('frontend/js/fetch/book-page.js') }}"></script>
 @endsection
