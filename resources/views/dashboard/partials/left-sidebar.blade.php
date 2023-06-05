@@ -23,25 +23,25 @@
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a class="sidebar-link waves-effect waves-dark sidebar-link {{ request()->is('admin/book_list') || request()->is('admin/books/create') || request()->is('admin/books/*/edit') ||  request()->is('admin/books/upload') ? 'active' : '' }}" href="{{ route('books.list') }}">
+                    <a class="sidebar-link waves-effect waves-dark sidebar-link {{ request()->is('admin/book_list') || request()->is('admin/books/create') || request()->is('admin/books/*/edit') ||  request()->is('admin/books/upload') ? 'active' : '' }}" href="{{ route('books.index') }}">
                         <i class="fa fa-book"></i>
                         <span class="hide-menu">Books</span>
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a class="sidebar-link waves-effect waves-dark sidebar-link {{ request()->is('admin/author_list') || request()->is('admin/authors/create') || request()->is('admin/authors/*/edit') ? 'active' : '' }}" href="{{ route('authors.list') }}">
+                    <a class="sidebar-link waves-effect waves-dark sidebar-link {{ request()->is('admin/author_list') || request()->is('admin/authors/create') || request()->is('admin/authors/*/edit') ? 'active' : '' }}" href="{{ route('authors.index') }}">
                         <i class="fa fa-users"></i>
                         <span class="hide-menu">Authors</span>
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a class="sidebar-link waves-effect waves-dark sidebar-link {{ request()->is('admin/genre_list') || request()->is('admin/genres/create') || request()->is('admin/genres/*/edit') ? 'active' : '' }}" href="{{ route('genres.list') }}">
+                    <a class="sidebar-link waves-effect waves-dark sidebar-link {{ request()->is('admin/genre_list') || request()->is('admin/genres/create') || request()->is('admin/genres/*/edit') ? 'active' : '' }}" href="{{ route('genres.index') }}">
                         <i class="fa fa-list"></i>
                         <span class="hide-menu">Genres</span>
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a class="sidebar-link waves-effect waves-dark sidebar-link {{ request()->is('admin/subscribed_list') ? 'active' : '' }}" href="{{ route('subscribed-user.list') }}">
+                    <a class="sidebar-link waves-effect waves-dark sidebar-link {{ request()->is('admin/subscribed_list') ? 'active' : '' }}" href="{{ route('subscribed-users.index') }}">
                         <i class="fa fa-envelope"></i>
                         <span class="hide-menu">Subscribed Email List</span>
                     </a>

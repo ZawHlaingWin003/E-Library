@@ -32,8 +32,6 @@ class AppServiceProvider extends ServiceProvider
         $this->registerComponents('atoms');
         $this->registerComponents('molecules');
         $this->registerComponents('organism');
-
-        
     }
 
     public function registerComponents($directory)

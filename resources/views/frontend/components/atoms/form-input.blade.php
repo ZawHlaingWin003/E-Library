@@ -1,6 +1,7 @@
 
 @props([
-    'name'
+    'name',
+    'class'
 ])
 
 <input {{ $attributes->merge(['class' => 'primary-input']) }}>
