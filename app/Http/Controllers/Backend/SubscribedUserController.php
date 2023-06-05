@@ -11,8 +11,8 @@ class SubscribedUserController extends Controller
 {
     public function index()
     {
-        $emails = SubscribedUser::orderBy('id', 'desc')->paginate(5);
-        return view('dashboard.pages.subscribed-users.index', compact('emails'))
+        $subscribedUsers = SubscribedUser::orderBy('id', 'desc')->paginate(5);
+        return view('dashboard.pages.subscribed-users.index', compact('subscribedUsers'))
             ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 }

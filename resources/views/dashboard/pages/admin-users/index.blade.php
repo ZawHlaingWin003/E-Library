@@ -22,11 +22,41 @@
                         <th>Phone</th>
                         <th>Ip Address</th>
                         <th>Last Login At</th>
-                        <th>Created At</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
+                    @foreach ($admin_users as $index => $admin_user)
+                        <tr>
+                            <td>{{ ++$index }}</td>
+                            <td class="txt-oflo">{{ $admin_user->name }}</td>
+                            <td>{{ $admin_user->email }}</td>
+                            <td>{{ $admin_user->phone }}</td>
+                            <td>
+                                <span class="text-success">
+                                    {{ $admin_user->ip ? $admin_user->ip : 'Haven\'t Login yet' }}
+                                </span>
+                            </td>
+                            <td class="text-success">
+                                @if ($admin_user->last_login_at)
+                                    {{ \Carbon\Carbon::parse($admin_user->last_login_at)->diffForHumans() }}
+                                @else
+                                    <span class="badge rounded-pill bg-dark">UnLogged In</span>
+                                @endif
+                            </td>
+                            <td>
+                                <div class="action-btns d-flex gap-2">
+                                    <a href="{{ route('admin.admin-users.edit', $admin_user->id) }}" class="btn btn-sm btn-success">
+                                        <span><i class="fa-solid fa-user-pen"></i></span>
+                                    </a>
+                                    <a href="{{ route('admin.admin-users.destroy', $admin_user->id) }}" class="btn btn-sm btn-danger">
+                                        <span><i class="fa-solid fa-user-xmark"></i></span>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach
+
                 </tbody>
             </table>
         </div>
@@ -37,48 +67,7 @@
 
     <script>
         $(document).ready(function() {
-            $('#adminUser_dataTable').DataTable({
-                processing: true,
-                serverSide: true,
-                ajax: "/admin/admin-users/ssr",
-                columns: [{
-                        data: "DT_RowIndex",
-                        name: "DT_RowIndex"
-                    },
-                    {
-                        data: "name",
-                        name: "name"
-                    },
-                    {
-                        data: "email",
-                        name: "email"
-                    },
-                    {
-                        data: "phone",
-                        name: "phone"
-                    },
-                    {
-                        data: "ip_address",
-                        name: "ip_address"
-                    },
-                    {
-                        data: "last_login_at",
-                        name: "last_login_at",
-                    },
-                    {
-                        data: "created_at",
-                        name: "created_at",
-                    },
-                    {
-                        data: "action",
-                        name: "action",
-                    },
-                ],
-                columnDefs: [{
-                    targets: "no-sort",
-                    sortable: false
-                }],
-            });
+            $('#adminUser_dataTable').DataTable();
         });
     </script>
 

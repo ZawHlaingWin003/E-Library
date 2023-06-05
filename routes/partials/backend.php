@@ -23,7 +23,6 @@ use App\Http\Controllers\Backend\SubscribedUserController;
 Route::prefix('admin')
     ->name('admin.')
     ->group(function () {
-
         Route::controller(AdminLoginController::class)
             ->group(function () {
                 Route::get('/login', 'showLoginForm')->name('loginForm');
@@ -38,10 +37,17 @@ Route::prefix('admin')
                 ->prefix('admin-users')
                 ->name('admin-users.')
                 ->group(function () {
-                    Route::get('/ssr', 'ssr')->name('ssr');
                     Route::get('/export', 'export')->name('export');
                     Route::get('/upload', 'uploadExcel')->name('upload');
                     Route::post('/import', 'import')->name('import');
+                });
+
+            Route::controller(UserController::class)
+                ->prefix('users')
+                ->name('users.')
+                ->group(function () {
+                    Route::get('/ssr', 'ssr')->name('ssr');
+                    Route::get('/export', 'export')->name('export');
                 });
 
             Route::controller(BookController::class)
@@ -51,10 +57,8 @@ Route::prefix('admin')
                     Route::get('/check-slug', 'checkSlug')->name('checkSlug');
                 });
 
-            Route::get('/users/export', [UserController::class, 'export'])->name('users.export');
-
-            Route::resource('/admin-users', AdminUserController::class);
             Route::resource('/subscribed-users', SubscribedUserController::class);
+            Route::resource('/admin-users', AdminUserController::class);
             Route::resource('/users', UserController::class);
             Route::resource('/books', BookController::class);
             Route::resource('/authors', AuthorController::class);

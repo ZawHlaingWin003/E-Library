@@ -18,15 +18,15 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($emails as $email)
+                @foreach ($subscribedUsers as $user)
                 <tr>
                     <td>{{ ++$i }}</td>
-                    <td class="txt-oflo">{{ $email->email }}</td>
+                    <td class="txt-oflo">{{ $user->email }}</td>
                 </tr>
                 @endforeach
             </tbody>
         </table>
-        {{ $emails->links() }}
+        {{ $subscribedUsers->links() }}
     </div>
 </div>
 

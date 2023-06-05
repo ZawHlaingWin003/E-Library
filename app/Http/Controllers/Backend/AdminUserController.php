@@ -8,58 +8,13 @@ use App\Exports\AdminUsersExport;
 use App\Imports\AdminUsersImport;
 use App\Http\Controllers\Controller;
 use Maatwebsite\Excel\Facades\Excel;
-use Yajra\DataTables\Facades\DataTables;
 
 class AdminUserController extends Controller
 {
     public function index()
     {
         $admin_users = AdminUser::latest()->get();
-        return view('dashboard.pages.admin-users.index', compact('admin_users'))
-            ->with('i', (request()->input('page', 1) - 1) * 5);
-    }
-
-    public function ssr()
-    {
-        $data = AdminUser::all();
-        return DataTables::of($data)
-            ->addIndexColumn()
-            ->editColumn('name', function ($data) {
-                return $data->name;
-            })
-            ->editColumn('email', function ($data) {
-                return $data->email;
-            })
-            ->editColumn('phone', function ($data) {
-                return $data->phone;
-            })
-            ->editColumn('ip_address', function ($data) {
-                return $data->ip_address;
-            })
-            ->editColumn('last_login_at', function ($data) {
-                return $data->last_login_at;
-            })
-            ->editColumn('created_at', function ($data) {
-                return $data->created_at;
-            })
-            ->addColumn('action', function ($data) {
-                $show_btn = '<a href="' . route('admin.admin-users.create', $data->id) . '" class="btn btn-sm rounded btn-primary">Show <span class="ti-eye"></span></a>';
-
-                return '<div class="action-btns">' . $show_btn . '</div>';
-            })
-            ->rawColumns(['action'])
-            ->make(true);
-
-            // <td><span
-            //         class="text-success">{{ $admin_user->ip ? $admin_user->ip : 'Haven\'t Login yet' }}</span>
-            // </td>
-            // <td class="text-success">
-            //     @if ($admin_user->last_login_at)
-            //         {{ \Carbon\Carbon::parse($admin_user->last_login_at)->diffForHumans() }}
-            //     @else
-            //         <span class="badge rounded-pill bg-dark">UnLogged In</span>
-            //     @endif
-            //                 </td>
+        return view('dashboard.pages.admin-users.index', compact('admin_users'));
     }
 
     public function create()
