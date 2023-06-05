@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="container">
-    <a href="{{ route('genres.create') }}" class="btn btn-primary mb-3"><i class="fa fa-plus"></i> Add New Genres</a>
+    <a href="{{ route('admin.genres.create') }}" class="btn btn-primary mb-3"><i class="fa fa-plus"></i> Add New Genres</a>
     <div class="genres">
         @if (Session('success'))
             <p class="alert alert-success">{{ session('success') }}</p>
@@ -16,8 +16,8 @@
                     <div class="card text-center">
                         <div class="card-body">{{ $genre->name }}</div>
                         <div class="card-footer">
-                            <a href="{{ route('genres.edit', $genre->id) }}" class="btn btn-sm btn-success">Edit <i class="fa fa-edit"></i></a>
-                        <form action="{{ route('genres.destroy', $genre->id) }}" method="POST" class="d-inline">
+                            <a href="{{ route('admin.genres.edit', $genre->id) }}" class="btn btn-sm btn-success">Edit <i class="fa fa-edit"></i></a>
+                        <form action="{{ route('admin.genres.destroy', $genre->id) }}" method="POST" class="d-inline">
                             @csrf
                             @method('DELETE')
 

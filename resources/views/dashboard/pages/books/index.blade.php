@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="container">
-    <a href="{{ route('books.create') }}" class="btn btn-primary mb-3"><i class="fa fa-plus"></i> Add New Book</a>
+    <a href="{{ route('admin.books.create') }}" class="btn btn-primary mb-3"><i class="fa fa-plus"></i> Add New Book</a>
     @if (session('success'))
         <p class="alert alert-success">{{ session('success') }}</p>
     @endif
@@ -29,9 +29,9 @@
                         <span class="badge bg-primary">{{ $genre->name }}</span>
                     @endforeach</td>
                     <td class="txt-ofo">
-                        <a href="{{ route('books.show', $book) }}" class="btn btn-sm btn-success">Detail <i class="fa fa-user-cog"></i></a>
-                        <a href="{{ route('books.edit', $book) }}" class="btn btn-sm btn-success">Edit <i class="fa fa-user-pen"></i></a>
-                        <form action="{{ route('books.destroy', $book) }}" method="POST" class="d-inline">
+                        <a href="{{ route('books.show', $book) }}" class="btn btn-sm btn-primary">Detail <i class="fa fa-user-cog"></i></a>
+                        <a href="{{ route('admin.books.edit', $book) }}" class="btn btn-sm btn-success">Edit <i class="fa fa-user-pen"></i></a>
+                        <form action="{{ route('admin.books.destroy', $book) }}" method="POST" class="d-inline">
                             @csrf
                             @method('DELETE')
 

@@ -9,7 +9,7 @@
             <p class="alert alert-success">{{ session('success') }}</p>
         @endif
         <div class="card p-3">
-            <form action="{{ route('authors.update', $author->id) }}" method="POST" enctype="multipart/form-data" autocomplete="off">
+            <form action="{{ route('admin.authors.update', $author->id) }}" method="POST" enctype="multipart/form-data" autocomplete="off">
                 @csrf
                 @method('PUT')
 
@@ -40,7 +40,7 @@
 
                 <div class="form-group mb-3">
                     <button class="btn btn-primary" type="submit">Update Author <i class="fa fa-plus"></i></button>
-                    <a href="{{ route('authors.list') }}" class="btn btn-danger">Cancle</a>
+                    <a href="{{ route('admin.authors.index') }}" class="btn btn-danger">Cancle</a>
                 </div>
             </form>
         </div>

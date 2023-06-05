@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="container">
-    <a href="{{ route('authors.create') }}" class="btn btn-primary mb-3"><i class="fa fa-envelope-open"></i> Send Notification</a>
+    <a href="{{ route('admin.authors.create') }}" class="btn btn-primary mb-3"><i class="fa fa-envelope-open"></i> Send Notification</a>
 
     <div class="table-responsive">
         @if (Session('success'))

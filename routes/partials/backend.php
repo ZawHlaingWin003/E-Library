@@ -21,13 +21,14 @@ use App\Http\Controllers\Backend\SubscribedUserController;
 */
 
 Route::prefix('admin')
+    ->name('admin.')
     ->group(function () {
 
         Route::controller(AdminLoginController::class)
             ->group(function () {
-                Route::get('/login', 'showLoginForm')->name('admin.loginForm');
-                Route::post('/login', 'login')->name('admin.login');
-                Route::post('/logout', 'logout')->name('admin.logout');
+                Route::get('/login', 'showLoginForm')->name('loginForm');
+                Route::post('/login', 'login')->name('login');
+                Route::post('/logout', 'logout')->name('logout');
             });
 
         Route::middleware('auth:admin_user')->group(function () {

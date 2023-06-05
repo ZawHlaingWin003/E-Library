@@ -5,7 +5,7 @@
 @section('content')
 <div class="container">
     <a href="#" class="btn btn-primary mb-3"><i class="fa fa-plus"></i> Add New User</a>
-    <a href="{{ route('users.export') }}" class="btn btn-dark mb-3 float-end"><i class="far fa-clock"></i> Export To Excel</a>
+    <a href="{{ route('admin.users.export') }}" class="btn btn-dark mb-3 float-end"><i class="far fa-clock"></i> Export To Excel</a>
     <div class="table-responsive">
         <table class="table no-wrap">
             <thead>

@@ -5,9 +5,9 @@
 @section('content')
     <div class="container">
         <a href="#" class="btn btn-primary mb-3"><i class="fa fa-plus"></i> Add Admin User</a>
-        <a href="{{ route('admin-users.export') }}" class="btn btn-dark mb-3 float-end"><i class="fa fa-file-export"></i>
+        <a href="{{ route('admin.admin-users.export') }}" class="btn btn-dark mb-3 float-end"><i class="fa fa-file-export"></i>
             Export To Excel</a>
-        <a href="{{ route('admin-users.upload') }}" class="btn btn-dark mb-3">Import Excel Data <i
+        <a href="{{ route('admin.admin-users.upload') }}" class="btn btn-dark mb-3">Import Excel Data <i
                 class="fa fa-file-import"></i></a>
         <div class="table-responsive">
             @if (session('success'))
@@ -27,24 +27,6 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($admin_users as $admin_user)
-                        <tr>
-                            <td>{{ ++$i }}</td>
-                            <td class="txt-oflo">{{ $admin_user->name }}</td>
-                            <td>{{ $admin_user->email }}</td>
-                            <td class="txt-oflo">{{ $admin_user->phone }}</td>
-                            <td><span
-                                    class="text-success">{{ $admin_user->ip ? $admin_user->ip : 'Haven\'t Login yet' }}</span>
-                            </td>
-                            <td class="text-success">
-                                @if ($admin_user->last_login_at)
-                                    {{ \Carbon\Carbon::parse($admin_user->last_login_at)->diffForHumans() }}
-                                @else
-                                    <span class="badge rounded-pill bg-dark">UnLogged In</span>
-                                @endif
-                            </td>
-                        </tr>
-                    @endforeach
                 </tbody>
             </table>
         </div>

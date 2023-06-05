@@ -43,12 +43,23 @@ class AdminUserController extends Controller
                 return $data->created_at;
             })
             ->addColumn('action', function ($data) {
-                $show_btn = '<a href="' . route('admin-users.create', $data->id) . '" class="btn btn-sm rounded btn-primary">Show <span class="ti-eye"></span></a>';
+                $show_btn = '<a href="' . route('admin.admin-users.create', $data->id) . '" class="btn btn-sm rounded btn-primary">Show <span class="ti-eye"></span></a>';
 
                 return '<div class="action-btns">' . $show_btn . '</div>';
             })
             ->rawColumns(['action'])
             ->make(true);
+
+            // <td><span
+            //         class="text-success">{{ $admin_user->ip ? $admin_user->ip : 'Haven\'t Login yet' }}</span>
+            // </td>
+            // <td class="text-success">
+            //     @if ($admin_user->last_login_at)
+            //         {{ \Carbon\Carbon::parse($admin_user->last_login_at)->diffForHumans() }}
+            //     @else
+            //         <span class="badge rounded-pill bg-dark">UnLogged In</span>
+            //     @endif
+            //                 </td>
     }
 
     public function create()

@@ -10,7 +10,7 @@
                 <p class="alert alert-success">{{ session('success') }}</p>
             @endif
             <div class="card p-3">
-                <form action="{{ route('genres.store') }}" method="POST" enctype="multipart/form-data" autocomplete="off">
+                <form action="{{ route('admin.genres.store') }}" method="POST" enctype="multipart/form-data" autocomplete="off">
                     @csrf
 
                     <div class="form-group mb-5">
@@ -30,7 +30,7 @@
 
                     <div class="form-group mb-3">
                         <button class="btn btn-primary" type="submit">Add Genres <i class="fa fa-plus"></i></button>
-                        <a href="{{ route('genres.list') }}" class="btn btn-danger">Cancle</a>
+                        <a href="{{ route('admin.genres.index') }}" class="btn btn-danger">Cancle</a>
                     </div>
                 </form>
             </div>

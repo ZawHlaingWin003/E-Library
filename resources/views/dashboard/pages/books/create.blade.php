@@ -9,7 +9,7 @@
                 <p class="alert alert-success">{{ session('success') }}</p>
             @endif
             <div class="card p-3">
-                <form action="{{ route('books.store') }}" method="POST" enctype="multipart/form-data" autocomplete="off">
+                <form action="{{ route('admin.books.store') }}" method="POST" enctype="multipart/form-data" autocomplete="off">
                     @csrf
 
                     <div class="form-group mb-4">
@@ -92,7 +92,7 @@
 
                     <div class="form-group mb-4">
                         <button class="btn btn-primary" type="submit">Add book <i class="fa fa-plus"></i></button>
-                        <a href="{{ route('books.list') }}" class="btn btn-danger">Cancle</a>
+                        <a href="{{ route('admin.books.index') }}" class="btn btn-danger">Cancle</a>
                     </div>
                 </form>
             </div>
@@ -106,7 +106,7 @@
         $('#name').change(function(e) {
             e.preventDefault();
 
-            $.get("{{ route('books.checkSlug') }}", {
+            $.get("{{ route('admin.books.checkSlug') }}", {
                     'name': $(this).val()
                 },
                 function(data) {
