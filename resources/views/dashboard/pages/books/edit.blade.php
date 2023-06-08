@@ -9,7 +9,7 @@
             <p class="alert alert-success">{{ session('success') }}</p>
         @endif
         <div class="card p-3">
-            <form action="{{ route('books.update', $book) }}" method="POST" enctype="multipart/form-data" autocomplete="off">
+            <form action="{{ route('admin.books.update', $book) }}" method="POST" enctype="multipart/form-data" autocomplete="off">
                 @csrf
                 @method('PUT')
 
@@ -101,7 +101,7 @@
 
                 <div class="form-group mb-4">
                     <button class="btn btn-primary" type="submit">Update book <i class="fa fa-plus"></i></button>
-                    <a href="{{ route('books.list') }}" class="btn btn-danger">Cancle</a>
+                    <a href="{{ route('admin.books.index') }}" class="btn btn-danger">Cancle</a>
                 </div>
             </form>
         </div>
@@ -116,7 +116,7 @@
     $('#name').change(function (e) {
         e.preventDefault();
 
-        $.get("{{ route('books.checkSlug') }}", { 'name': $(this).val() },
+        $.get("{{ route('admin.books.checkSlug') }}", { 'name': $(this).val() },
             function (data) {
                 $("#slug").val(data.slug);
             },

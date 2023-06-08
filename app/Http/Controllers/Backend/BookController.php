@@ -71,7 +71,7 @@ class BookController extends Controller
         $genres = Genre::find($request->genres);
         $book->genres()->attach($genres);
 
-        return redirect()->route('books.list')
+        return redirect()->route('admin.books.index')
             ->with('success', 'New book (' . $book->name . ') added successfully!');
     }
 
@@ -128,7 +128,7 @@ class BookController extends Controller
 
         $book->update();
 
-        return redirect()->route('books.list')
+        return redirect()->route('admin.books.index')
             ->with('success', 'Book (' . $book->name . ') updated successfully!');
     }
 
