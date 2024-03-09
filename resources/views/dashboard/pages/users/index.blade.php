@@ -4,11 +4,12 @@
 
 @section('content')
     <div class="users">
-        <a href="#" class="btn btn-primary mb-3"><i class="fa fa-plus"></i> Add New User</a>
-        <a href="{{ route('admin.users.export') }}" class="btn btn-dark mb-3 float-end"><i class="far fa-clock"></i> Export To
+        {{-- <a href="#" class="btn btn-primary mb-3"><i class="fa fa-plus"></i> Add New User</a> --}}
+        <a class="btn btn-dark float-end mb-3" href="{{ route('admin.users.export') }}"><i class="far fa-clock"></i> Export To
             Excel</a>
+        <div style="clear: both;"></div>
         <div class="table-responsive">
-            <table class="table no-wrap" id="user_dataTable">
+            <table class="no-wrap table" id="user_dataTable">
                 <thead>
                     <tr>
                         <th class="no-sort">#</th>
@@ -35,8 +36,7 @@
                 processing: true,
                 serverSide: true,
                 ajax: "/admin/users/ssr",
-                columns: [
-                    {
+                columns: [{
                         data: "DT_RowIndex"
                     },
                     {

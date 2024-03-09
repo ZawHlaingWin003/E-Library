@@ -42,7 +42,7 @@
             <div class="published-book-list">
                 <div class="d-flex justify-content-between align-items-center">
                     <h3 class="title">Published Book List</h3>
-                    <a href="#" class="btn btn-primary primary-btn">Go to Library</a>
+                    <a href="{{ route('books.index') }}" class="btn btn-primary primary-btn">Go to Library</a>
                 </div>
                 <hr>
                 <div class="container books">

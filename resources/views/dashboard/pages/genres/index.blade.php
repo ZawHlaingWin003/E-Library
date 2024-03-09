@@ -16,7 +16,7 @@
                             <div class="card text-center">
                                 <div class="card-body">{{ $genre->name }}</div>
                                 <div class="card-footer">
-                                    <a class="btn btn-sm btn-success" href="{{ route('admin.genres.edit', $genre->id) }}">Edit <i
+                                    <a class="btn btn-sm btn-success text-white" href="{{ route('admin.genres.edit', $genre->id) }}">Edit <i
                                             class="fa fa-edit"></i></a>
                                     <form action="{{ route('admin.genres.destroy', $genre->id) }}" class="d-inline" method="POST">
                                         @csrf

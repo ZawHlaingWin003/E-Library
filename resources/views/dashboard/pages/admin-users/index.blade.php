@@ -4,16 +4,18 @@
 
 @section('content')
     <div class="container">
-        <a href="#" class="btn btn-primary mb-3"><i class="fa fa-plus"></i> Add Admin User</a>
-        <a href="{{ route('admin.admin-users.export') }}" class="btn btn-dark mb-3 float-end"><i class="fa fa-file-export"></i>
-            Export To Excel</a>
-        <a href="{{ route('admin.admin-users.upload') }}" class="btn btn-dark mb-3">Import Excel Data <i
-                class="fa fa-file-import"></i></a>
+        {{-- <a class="btn btn-primary mb-3" href="#"><i class="fa fa-plus"></i> Add Admin User</a> --}}
+        <div class="float-end">
+            <a class="btn btn-dark mb-3" href="{{ route('admin.admin-users.upload') }}">Import Excel Data <i class="fa fa-file-import"></i></a>
+            <a class="btn btn-dark mb-3" href="{{ route('admin.admin-users.export') }}"><i class="fa fa-file-export"></i>
+                Export To Excel</a>
+        </div>
+        <div style="clear: both;"></div>
         <div class="table-responsive">
             @if (session('success'))
                 <p class="alert alert-success">{{ session('success') }}</p>
             @endif
-            <table class="table no-wrap table-striped" id="adminUser_dataTable">
+            <table class="no-wrap table-striped table" id="adminUser_dataTable">
                 <thead>
                     <tr>
                         <th>#</th>
@@ -46,10 +48,10 @@
                             </td>
                             <td>
                                 <div class="action-btns d-flex gap-2">
-                                    <a href="{{ route('admin.admin-users.edit', $admin_user->id) }}" class="btn btn-sm btn-success">
+                                    <a class="btn btn-sm btn-success" href="{{ route('admin.admin-users.edit', $admin_user->id) }}">
                                         <span><i class="fa-solid fa-user-pen"></i></span>
                                     </a>
-                                    <a href="{{ route('admin.admin-users.destroy', $admin_user->id) }}" class="btn btn-sm btn-danger">
+                                    <a class="btn btn-sm btn-danger" href="{{ route('admin.admin-users.destroy', $admin_user->id) }}">
                                         <span><i class="fa-solid fa-user-xmark"></i></span>
                                     </a>
                                 </div>

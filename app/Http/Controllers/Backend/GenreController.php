@@ -49,7 +49,7 @@ class GenreController extends Controller
         return back()->with('success', 'Genre added successfully!');
     }
 
-    
+
 
     public function edit(Genre $genre)
     {

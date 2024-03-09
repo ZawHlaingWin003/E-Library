@@ -1,4 +1,3 @@
-
 <?php
 
 use Illuminate\Support\Facades\Route;
@@ -55,6 +54,13 @@ Route::prefix('admin')
                 ->name('books.')
                 ->group(function () {
                     Route::get('/check-slug', 'checkSlug')->name('checkSlug');
+                });
+
+            Route::controller(GenreController::class)
+                ->prefix('genres')
+                ->name('genres.')
+                ->group(function () {
+                    Route::get('/create_many', 'createMany')->name('createMany');
                 });
 
             Route::resource('/subscribed-users', SubscribedUserController::class);

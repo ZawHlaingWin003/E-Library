@@ -25,15 +25,14 @@
     <section class="authors">
         <div class="container">
             @auth('admin_user')
-                <a href="" class="btn btn-primary">Add Author</a>
+                <a class="btn btn-primary" href="{{ route('admin.authors.create') }}">Add Author</a>
             @endauth
             <div class="form-group my-4">
                 <h1 class="title mb-4">Search with Author Name</h1>
-                <x-form-input type="text" name="search" id="search-author" autocomplete="off"
-                    placeholder="Search Author..." />
+                <x-form-input autocomplete="off" id="search-author" name="search" placeholder="Search Author..." type="text" />
                 <strong>
                     <small>
-                        <span class="text-danger opacity-75 float-end">
+                        <span class="text-danger float-end opacity-75">
                             Don't forget to press enter
                         </span>
                     </small>
